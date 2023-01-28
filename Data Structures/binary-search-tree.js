@@ -48,50 +48,8 @@ class BST {
     }
   }
 
-  delete(value, current = this.root, parent = null) {
-    if (current == null) {
-      return null;
-    }
-    if (value == current.value) {
-      if (current.left == null && current.right == null) {  // has no child
-        if(parent.value < value){  // deleting from parents child
-          parent.right = null
-          return
-        }
-        else{
-          parent.left = null
-          return
-        }
-      }
-      if(current.left == null) {  //only has left or right child
-        current.value = current.right.value
-        current.right = null
-        return
-      }
-      if(current.right == null) { //only has left or right child
-        current.value = current.left.value
-        current.left = null
-        return
-      }
-
-      // if node has two children, we need to replace node with first right then leftist node 
-
-      let tempNode = current.right // first right
-      while(tempNode.left != null){  // then last left
-        tempNode = tempNode.left
-      }
-      current.value = tempNode.value
-      this.delete(tempNode.value, current.right)  // returning right causes error, current and tempNode same, there will be two same node, specify which one will be deleted, need to start from right child bu it causes error
-      return
-    }
-    if(value < current.value){
-      parent = current
-      this.delete(value, current.left, current)
-    } 
-    else if (value > current.value) {
-      parent = current
-      this.delete(value, current.right, current)
-    } 
+  delete(value) {
+    this.root = this.#deleteNodeHelper(this.root, value)
   }
 
   find(value) {
@@ -105,6 +63,40 @@ class BST {
     }
     if (current === null) return null;
     return current;
+  }
+
+  #deleteNodeHelper(node, value){
+    if (node == null) {
+        return null;
+      }
+      if (value == node.value) {
+        // node has no children 
+        if (node.left == null && node.right == null) {
+          return null;
+        }
+        // node has no left child 
+        if (node.left == null) {
+          return node.right;
+        }
+        // node has no right child 
+        if (node.right == null) {
+          return node.left;
+        }
+        // node has two children 
+        var tempNode = node.right;
+        while (tempNode.left !== null) {
+          tempNode = tempNode.left;
+        }
+        node.value = tempNode.value;
+        node.right = this.#deleteNodeHelper(node.right, tempNode.value);
+        return node;
+      } else if (value < node.value) {
+        node.left = this.#deleteNodeHelper(node.left, value);
+        return node;
+      } else {
+        node.right = this.#deleteNodeHelper(node.right, value);
+        return node;
+      }
   }
 }
 
@@ -123,5 +115,5 @@ bstree.insert(444)
 bstree.insert(300)
 bstree.insert(10)
 console.log(prettyPrint(bstree.root));
-bstree.delete(324)
+bstree.delete(8)
 console.log(prettyPrint(bstree.root));
