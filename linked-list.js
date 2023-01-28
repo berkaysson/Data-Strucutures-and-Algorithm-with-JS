@@ -36,44 +36,44 @@ class LinkedList {
   }
 
   insertAt(value, index) {
-    if(index>this.size || index < 0) return 'Out of size'
-    else if(index === 0) this.prepend(value)
-    else if(index === this.size) this.append(value)
-    else{
-        let node = new Node(value);
-        let current = this.head;
-        let count = 0;
-        let previous;
-        while(count < index){
-            previous = current;
-            current = current.nextNode 
-            count++
-        }
+    if (index > this.size || index < 0) return "Out of size";
+    else if (index === 0) this.prepend(value);
+    else if (index === this.size) this.append(value);
+    else {
+      let node = new Node(value);
+      let current = this.head;
+      let count = 0;
+      let previous;
+      while (count < index) {
+        previous = current;
+        current = current.nextNode;
+        count++;
+      }
 
-        node.nextNode = current
-        previous.nextNode = node
+      node.nextNode = current;
+      previous.nextNode = node;
 
-        this.size++
+      this.size++;
     }
   }
 
   removeAt(index) {
-    if(index>this.size || index < 0) return 'Out of size'
-    else if(index === this.size) this.pop()
+    if (index > this.size || index < 0) return "Out of size";
+    else if (index === this.size) this.pop();
     else if (index === 0) {
-        this.head = this.head.nextNode
-    }
-    else{
-        let current = this.head;
-        let previous
-        for (let i = 0; i < this.size; i++) {
-            if (i === index) {
-              previous.nextNode = current.nextNode;
-            }
-            previous = current;
-            current = current.nextNode;
+      this.head = this.head.nextNode;
+    } else {
+      let current = this.head;
+      let previous;
+      for (let i = 0; i < this.size; i++) {
+        if (i === index) {
+          previous.nextNode = current.nextNode;
         }
+        previous = current;
+        current = current.nextNode;
+      }
     }
+    this.size--;
   }
 
   pop() {
@@ -135,13 +135,3 @@ class LinkedList {
     return str;
   }
 }
-
-const ll = new LinkedList();
-ll.prepend(100);
-ll.prepend(30);
-ll.prepend(200);
-ll.append(1);
-ll.append(2);
-console.log(ll.toString());
-ll.removeAt(4)
-console.log(ll.toString());
