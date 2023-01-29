@@ -49,7 +49,7 @@ class BST {
   }
 
   delete(value) {
-    this.root = this.#deleteNodeHelper(this.root, value)
+    this.root = this.#deleteNodeHelper(this.root, value);
   }
 
   find(value) {
@@ -65,38 +65,73 @@ class BST {
     return current;
   }
 
-  #deleteNodeHelper(node, value){
+  levelorder() {
+    let arr = [];
+    let queue = [];
+    if (this.root != null) {
+      queue.push(this.root);
+      while (queue.length > 0) {
+        let current = queue.shift();
+        arr.push(current.value);
+        if (current.left != null) {
+          queue.push(current.left);
+        }
+        if (current.right != null) {
+          queue.push(current.right);
+        }
+      }
+    }
+    else return null;
+    return arr;
+  }
+
+  isBalanced(current = this.root) {
+    return this.#minHeight() >= this.#maxHeight() - 1;
+  }
+
+  #minHeight(current = this.root) {
+    if (current == null) return -1;
+    let left = this.#minHeight(current.left);
+    let right = this.#minHeight(current.right);
+    if (left < right) return left + 1;
+    else return right + 1;
+  }
+
+  #maxHeight(current = this.root) {
+    if (current == null) return -1;
+    let left = this.#maxHeight(current.left);
+    let right = this.#maxHeight(current.right);
+    if (left > right) return left + 1;
+    else return right + 1;
+  }
+
+  #deleteNodeHelper(node, value) {
     if (node == null) {
-        return null;
+      return null;
+    }
+    if (value == node.value) {
+      // node has no children
+      if (node.left == null && node.right == null) return null;
+      // node has no left child
+      if (node.left == null) return node.right;
+      // node has no right child
+      if (node.right == null) return node.left;
+
+      // node has two children
+      let tempNode = node.right;
+      while (tempNode.left !== null) {
+        tempNode = tempNode.left;
       }
-      if (value == node.value) {
-        // node has no children 
-        if (node.left == null && node.right == null) {
-          return null;
-        }
-        // node has no left child 
-        if (node.left == null) {
-          return node.right;
-        }
-        // node has no right child 
-        if (node.right == null) {
-          return node.left;
-        }
-        // node has two children 
-        var tempNode = node.right;
-        while (tempNode.left !== null) {
-          tempNode = tempNode.left;
-        }
-        node.value = tempNode.value;
-        node.right = this.#deleteNodeHelper(node.right, tempNode.value);
-        return node;
-      } else if (value < node.value) {
-        node.left = this.#deleteNodeHelper(node.left, value);
-        return node;
-      } else {
-        node.right = this.#deleteNodeHelper(node.right, value);
-        return node;
-      }
+      node.value = tempNode.value;
+      node.right = this.#deleteNodeHelper(node.right, tempNode.value);
+      return node;
+    } else if (value < node.value) {
+      node.left = this.#deleteNodeHelper(node.left, value);
+      return node;
+    } else {
+      node.right = this.#deleteNodeHelper(node.right, value);
+      return node;
+    }
   }
 }
 
@@ -111,9 +146,8 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 }
 
 let bstree = new BST([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-bstree.insert(444)
-bstree.insert(300)
-bstree.insert(10)
+// bstree.insert(444)
+// bstree.insert(300)
+// bstree.insert(10)
 console.log(prettyPrint(bstree.root));
-bstree.delete(8)
-console.log(prettyPrint(bstree.root));
+console.log(bstree.levelorder());
