@@ -66,13 +66,13 @@ class BST {
   }
 
   levelorder() {
-    let arr = [];
+    let result = [];
     let queue = [];
     if (this.root != null) {
       queue.push(this.root);
       while (queue.length > 0) {
         let current = queue.shift();
-        arr.push(current.value);
+        result.push(current.value);
         if (current.left != null) {
           queue.push(current.left);
         }
@@ -82,7 +82,31 @@ class BST {
       }
     }
     else return null;
-    return arr;
+    return result;
+  }
+
+  inorder(current = this.root, result = []){
+    if(this.root == null) return null;
+    current.left && this.inorder(current.left, result)
+    result.push(current.value)
+    current.right && this.inorder(current.right, result)
+    return result
+  }
+
+  postorder(current = this.root, result = []){
+    if(this.root == null) return null;
+    current.left && this.postorder(current.left, result)
+    current.right && this.postorder(current.right, result)
+    result.push(current.value)
+    return result
+  }
+
+  preorder(current = this.root, result = []){
+    if(this.root == null) return null;
+    result.push(current.value)
+    current.left && this.preorder(current.left, result)
+    current.right && this.preorder(current.right, result)
+    return result
   }
 
   isBalanced(current = this.root) {
