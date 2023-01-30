@@ -113,6 +113,12 @@ class BST {
     return this.#minHeight() >= this.#maxHeight() - 1;
   }
 
+  rebalance(){
+    let arr = this.levelorder();
+    arr.sort((a, b) => a - b);
+    return this.root = this.buildTree(arr);
+  }
+
   #minHeight(current = this.root) {
     if (current == null) return -1;
     let left = this.#minHeight(current.left);
@@ -170,8 +176,9 @@ function prettyPrint(node, prefix = "", isLeft = true) {
 }
 
 let bstree = new BST([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-// bstree.insert(444)
-// bstree.insert(300)
-// bstree.insert(10)
+bstree.insert(444)
+bstree.insert(300)
+bstree.insert(10)
 console.log(prettyPrint(bstree.root));
-console.log(bstree.levelorder());
+bstree.rebalance();
+console.log(prettyPrint(bstree.root));
