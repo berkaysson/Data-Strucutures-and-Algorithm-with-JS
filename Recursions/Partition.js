@@ -29,4 +29,5 @@ const Partition = (n, m) => {
   }
 };
 
+// enter the command of "node Partition.js" in terminal
 console.log(Partition(5, 3));
