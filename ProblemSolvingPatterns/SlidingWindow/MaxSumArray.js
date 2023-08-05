@@ -33,3 +33,4 @@ function maxSumSubarray(arr) {
 
 // Test the function with an example array.
 console.log(maxSumSubarray([1, -3, -5, 2, 1, -1, 4, -2, 5, -2])); //9
+// wrong for negative maxSum values 
