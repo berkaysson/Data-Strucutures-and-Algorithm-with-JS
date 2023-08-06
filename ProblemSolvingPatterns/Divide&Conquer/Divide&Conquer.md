@@ -37,3 +37,32 @@ Divide and Conquer is particularly useful for problems that exhibit the followin
 2. **Optimal Substructure:** The optimal solution to the original problem can be constructed from the optimal solutions of its subproblems.
 
 Problems that are commonly solved using Divide and Conquer include sorting algorithms (e.g., Merge Sort, Quick Sort), searching algorithms (e.g., Binary Search), and problems related to trees and graphs (e.g., Binary Tree Traversal, Closest Pair of Points).
+
+```
+function binarySearch(sortedArr: number[], value: number): number {
+    // Set the initial search space to the entire array
+    let min = 0;
+    let max = sortedArr.length - 1;
+
+    // Continue searching as long as the search space is not empty
+    while (min <= max) {
+        // Calculate the middle index of the current search space
+        let middle = Math.floor((min + max) / 2);
+
+        // Check if the value at the middle index is less than, greater than, or equal to the value being searched for
+        if (sortedArr[middle] < value) {
+            // Update the search space to the indices after the middle index
+            min = middle + 1;
+        } else if (sortedArr[middle] > value) {
+            // Update the search space to the indices before the middle index
+            max = middle - 1;
+        } else {
+            // Return the index if the value is found
+            return middle;
+        }
+    }
+
+    // Return -1 if the value is not found
+    return -1;
+}
+```
