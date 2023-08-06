@@ -66,3 +66,6 @@ function binarySearch(sortedArr: number[], value: number): number {
     return -1;
 }
 ```
+
+Visual implementation:
+![BinarySearch](../../sources/gifs/divideandconquer.gif)
